@@ -1,0 +1,82 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply from: '../deps.gradle'
+
+android {
+    compileSdkVersion configVersions.compileSdkVersion
+    buildToolsVersion configVersions.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion configVersions.minSdkVersion
+        targetSdkVersion configVersions.targetSdkVersion
+        versionCode configVersions.versionCode
+        versionName configVersions.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "version"
+
+    productFlavors {
+        production {
+            dimension "version"
+        }
+
+        development {
+            flavorDimensions "version"
+        }
+
+        staging {
+            flavorDimensions "version"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(path: ':core')
+    implementation project(path: ':network')
+
+    // Support
+    implementation supportDependencies.kotlin
+    implementation supportDependencies.coreKtx
+    implementation supportDependencies.material
+    implementation supportDependencies.lifecycleExtensions
+    implementation supportDependencies.coroutineCore
+    implementation supportDependencies.palette
+
+    // Layout
+    implementation layoutDependencies.constraint
+    implementation layoutDependencies.swiperefresh
+
+    // Dependency Injection
+    implementation injectionDependencies.dagger
+    implementation injectionDependencies.daggerSupport
+    implementation injectionDependencies.daggerAndroid
+    kapt injectionDependencies.daggerCompiler
+    kapt injectionDependencies.daggerProcessor
+
+    // Network
+    implementation networkDependencies.retrofit
+    implementation networkDependencies.gson
+
+    // Glide: Image loader
+    implementation(libraries.glide) {
+        exclude group: "androidx"
+    }
+    kapt libraries.glideCompiler
+
+    testImplementation testDependencies.junit
+    androidTestImplementation testDependencies.androidxJunit
+    androidTestImplementation testDependencies.androidxEspresso
+}

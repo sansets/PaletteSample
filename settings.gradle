@@ -1,0 +1,5 @@
+rootProject.name = 'Palette'
+include ':main'
+include ':core'
+include ':network'
+include ':movie'
