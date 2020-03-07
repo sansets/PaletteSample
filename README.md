@@ -1,4 +1,4 @@
-# JetpackPaletteSample
+# PaletteSample
 The palette library is a support library that extracts prominent colors from images to help you create visually engaging apps.
 
 For example, you can use a palette to create a color-coordinated title card for a song based on its album cover or to adjust an app’s toolbar color when its background image changes. The Palette object gives you access to the colors in a Bitmap image while also providing six main color profiles from the bitmap to help inform your design choices.
